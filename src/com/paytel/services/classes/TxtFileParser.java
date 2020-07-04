@@ -11,9 +11,9 @@ import java.util.Optional;
 
 
 public class TxtFileParser implements DataParser<File> {
-    ConsoleView consoleView;
-    public TxtFileParser(ConsoleView consoleView) {
-        this.consoleView = consoleView;
+    private ConsoleLog consoleLog;
+    public TxtFileParser(ConsoleLog consoleLog) {
+        this.consoleLog = consoleLog;
     }
     @Override
         public Optional<List<Double>> parseData(Optional<File> file) {
@@ -32,9 +32,9 @@ public class TxtFileParser implements DataParser<File> {
                     line = bufferedReader.readLine();
                 }
             } catch (FileNotFoundException e) {
-                consoleView.printAppMsg("File not found"+ e, MessageLevel.ERROR);
+                consoleLog.printAppMsg("File not found"+ e, MessageLevel.ERROR);
             } catch (IOException e) {
-                consoleView.printAppMsg("Error while getting file"+ e,MessageLevel.ERROR);
+                consoleLog.printAppMsg("Error while getting file"+ e,MessageLevel.ERROR);
             }
             if (!stringData.isBlank()){
                 stringList = new ArrayList<String>(Arrays.asList(stringData.split(",")));
