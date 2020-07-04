@@ -1,5 +1,6 @@
 package com.paytel.services.classes;
 
+import com.paytel.model.MessageLevel;
 import com.paytel.services.DataParser;
 
 import java.io.*;
@@ -10,8 +11,11 @@ import java.util.Optional;
 
 
 public class TxtFileParser implements DataParser<File> {
-
-        @Override
+    ConsoleView consoleView;
+    public TxtFileParser(ConsoleView consoleView) {
+        this.consoleView = consoleView;
+    }
+    @Override
         public Optional<List<Double>> parseData(Optional<File> file) {
             String stringData="";
             List<String> stringList;
@@ -28,9 +32,9 @@ public class TxtFileParser implements DataParser<File> {
                     line = bufferedReader.readLine();
                 }
             } catch (FileNotFoundException e) {
-               e.printStackTrace();
+                consoleView.printAppMsg("File not found"+ e, MessageLevel.ERROR);
             } catch (IOException e) {
-                e.printStackTrace();
+                consoleView.printAppMsg("Error while getting file"+ e,MessageLevel.ERROR);
             }
             if (!stringData.isBlank()){
                 stringList = new ArrayList<String>(Arrays.asList(stringData.split(",")));
